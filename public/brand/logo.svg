@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 48" fill="none" role="img" aria-label="VEYRA">
+  <path d="M12 10 L22 36 L32 10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="22" cy="14" r="2.5" fill="currentColor"/>
+  <text x="44" y="32" font-family="'Playfair Display', Georgia, serif" font-size="28" font-weight="600" letter-spacing="0.32em" fill="currentColor">VEYRA</text>
+</svg>

@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// SQLite has no enums/arrays, so list-like fields are comma-separated strings
+// and prices are stored in cents (integers) to avoid rounding errors.
+
+model User {
+  id           String         @id @default(cuid())
+  email        String         @unique
+  name         String
+  passwordHash String
+  role         String         @default("USER") // USER | ADMIN
+  createdAt    DateTime       @default(now())
+  cartItems    CartItem[]
+  wishlist     WishlistItem[]
+  orders       Order[]
+}
+
+model Product {
+  id          String         @id @default(cuid())
+  slug        String         @unique
+  name        String
+  description String
+  priceCents  Int
+  category    String // Tops | Bottoms | Accessories
+  gender      String // Men | Women | Unisex
+  tags        String         @default("")
+  sizes       String
+  colors      String
+  image       String?
+  stock       Int
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  cartItems   CartItem[]
+  wishlist    WishlistItem[]
+  orderItems  OrderItem[]
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  size      String
+  color     String
+  quantity  Int
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId, size, color])
+}
+
+model WishlistItem {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+}
+
+model Order {
+  id             String      @id @default(cuid())
+  userId         String
+  status         String      @default("PROCESSING") // PROCESSING | SHIPPED | DELIVERED | CANCELLED
+  subtotalCents  Int
+  shippingCents  Int
+  totalCents     Int
+  shipName       String
+  shipAddress    String
+  shipCity       String
+  shipPostal     String
+  idempotencyKey String?     @unique
+  createdAt      DateTime    @default(now())
+  user           User        @relation(fields: [userId], references: [id])
+  items          OrderItem[]
+}
+
+model OrderItem {
+  id         String   @id @default(cuid())
+  orderId    String
+  productId  String?
+  name       String
+  size       String
+  color      String
+  priceCents Int
+  quantity   Int
+  order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product    Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+}
