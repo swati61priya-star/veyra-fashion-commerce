@@ -1,6 +1,14 @@
 # VEYRA — Modern Style. Your Way.
+Screenshots
+<p align="center">
+  <img src="docs/screenshots/home.png" width="48%" alt="Home" />
+  <img src="docs/screenshots/shop.png" width="48%" alt="Shop" />
+</p>
+<p align="center">
+  <img src="docs/screenshots/cart.png" width="48%" alt="Cart" />
+</p>
 
-A full-stack fashion e-commerce **demo** built with Next.js (App Router), TypeScript, Tailwind, Prisma and SQLite.
+A full-stack fashion e-commerce **demo** built with Next.js (App Router), TypeScript, Tailwind, Prisma and PostgreSQL.
 Veyra is a fictional brand. Checkout is **simulated**: no payment is processed and no card data is collected.
 Recommendations are **rule-based** (category / tag / size overlap), not generative AI.
 
