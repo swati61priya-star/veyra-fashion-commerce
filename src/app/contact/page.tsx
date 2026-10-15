@@ -44,7 +44,7 @@ export default function ContactPage() {
         </div>
 
         {/* Contact Form */}
-        <form className="card space-y-4 bg-white" onSubmit={(e) => e.preventDefault()}>
+             <form className="card space-y-4 bg-white" action="/contact">
           <h2 className="text-xl font-display text-ink border-b border-ink/10 pb-3">
             Send a Message
           </h2>
